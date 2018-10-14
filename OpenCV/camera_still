@@ -1,0 +1,4 @@
+#!/bin/bash
+
+raspistill -o camera_still.jpg
+
