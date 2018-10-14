@@ -36,7 +36,6 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	
 	face_detection = face_detect.detectMultiScale(gray, 1.05, 5)
 	for (x,y,w,h) in face_detection:
-		print "Frame", x, y, w, h
 		cv2.rectangle(resize_frame, (x,y), (x+w,y+h), (0,0,255), 5)  	
  
 	# show the frame
