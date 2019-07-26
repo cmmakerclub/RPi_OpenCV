@@ -31,9 +31,13 @@ def face_detector(image, size=0.5):
         draw_red_rect(gray, x, y, w, h)
         cropped = crop_image(image, x, y, w, h)
         cv2.putText(image, str(face_count), (x, y), cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 255), 2)
+        cv2.imwrite("dataset/User." + str(face_id) + '.' + str(face_count) + ".jpg", gray[y:y + h, x:x + w])
 
     return True, image, cropped, gray
 
+
+# for each person, enter one numeric face id
+face_id = input('\n enter user id end press <return> ==>  ')
 
 capture = cv2.VideoCapture(0)
 
@@ -44,6 +48,7 @@ while True:
     cv2.putText(image, str(face_count), (0, 30), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
     if face_detected is not None:
         face_count = face_count + 1
+        # Save the captured image into the datasets folder
         pass
 
     cv2.imshow("Frame", gray)
