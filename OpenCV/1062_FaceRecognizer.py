@@ -71,11 +71,11 @@ while True:
             score = int(100 * (1 - (matching[1]) / 350))
             string = str(score) + '% Matching Confidence'
 
-        if score > 70:
+        if score > 85:
             # Input the text string using cv2.putText
             # cv2.putText(image, string, orgin, font, fontScale, color, thickness)
             cv2.putText(image, string, (0, 100), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 255), 2)
-            cv2.putText(image, "Welcome", (30, 20), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 255), 2)
+            cv2.putText(image, "Welcome Nat", (30, 20), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 255), 2)
 
             # Display Real-time Face Recognition using imshow built-in function
             cv2.imshow('Real-time Face Recognition', image)
