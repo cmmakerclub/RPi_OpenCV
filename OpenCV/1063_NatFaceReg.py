@@ -20,13 +20,15 @@ def crop_image(image, x, y, w, h):
 
 def face_detector(image, size=0.5):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    is_face_detected = face_cascade.detectMultiScale(gray, 1.2, 5)
+    detected_faces = face_cascade.detectMultiScale(image=image, scaleFactor=1.2, minNeighbors=5,
+                                                   minSize=(80, 80))
 
-    if is_face_detected is ():
+    if detected_faces is ():
         return None, image, None, gray
 
-    for (x, y, w, h) in is_face_detected:
+    for (x, y, w, h) in detected_faces:
         draw_red_rect(image, x, y, w, h)
+        draw_red_rect(gray, x, y, w, h)
         cropped = crop_image(image, x, y, w, h)
         cv2.putText(image, str(face_count), (x, y), cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 255), 2)
 
@@ -40,12 +42,12 @@ while True:
     capturing = cv2.resize(capturing, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_LINEAR)
     face_detected, image, cropped, gray = face_detector(capturing)
     cv2.putText(image, str(face_count), (0, 30), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2)
-    if face_detected != None:
+    if face_detected is not None:
         face_count = face_count + 1
         pass
 
     cv2.imshow("Frame", gray)
-    cv2.imshow("Capture", image)
+    # cv2.imshow("Capture", image)
     # if cropped != False:
     #     cv2.imshow("face", cropped)
     cv2.waitKey(1)
