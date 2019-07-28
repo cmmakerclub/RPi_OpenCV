@@ -30,17 +30,18 @@ def getImagesAndLabels(path):
 
     for imagePath in imagePaths:
         # PIL_img = Image.open(imagePath).convert('L')  # convert it to grayscale
-        # CV_LOAD_IMAGE_GRAYSCALE
-        img = cv2.cvtColor(cv2.imread(imagePath),
-                           cv2.COLOR_BGR2GRAY)
+
+        # img = cv2.cvtColor(cv2.imread(imagePath),
+        #                    cv2.COLOR_BGR2GRAY)
+        img = cv2.imread(imagePath, cv2.IMREAD_GRAYSCALE)
         img_numpy = np.array(img, 'uint8')
 
         id = int(os.path.split(imagePath)[-1].split(".")[1])
-        faceSamples.append(img_numpy)
-        faces = detector.detectMultiScale(img_numpy)
-        # for (x, y, w, h) in faces:
-        #     faceSamples.append(img_numpy[y:y + h, x:x + w])
-        #     ids.append(id)
+        faces = detector.detectMultiScale(image=img_numpy, scaleFactor=1.2, minNeighbors=5,
+                                          minSize=(80, 80))
+        for (x, y, w, h) in faces:
+            faceSamples.append(img_numpy[y:y + h, x:x + w])
+            ids.append(id)
 
     return faceSamples, ids
 
@@ -48,8 +49,8 @@ def getImagesAndLabels(path):
 print ("\n [INFO] Training faces. It will take a few seconds. Wait ...")
 faces, ids = getImagesAndLabels(path)
 # print(faces)
-print(np.array(ids))
-print(ids)
+# print(np.array(ids))
+# print(ids)
 recognizer.train(faces, np.array(ids))
 
 # Save the model into trainer/trainer.yml

@@ -27,7 +27,6 @@ minH = 0.1 * cam.get(4)
 while True:
 
     ret, img = cam.read()
-    # img = cv2.flip(img, -1)  # Flip vertically
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -39,9 +38,7 @@ while True:
     )
 
     for (x, y, w, h) in faces:
-
         cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
         id, confidence = recognizer.predict(gray[y:y + h, x:x + w])
 
         # Check if confidence is less them 100 ==> "0" is perfect match
